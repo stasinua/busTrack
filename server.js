@@ -10,7 +10,8 @@ app.get('*', function(req,res){
     query: req.query,
     url: req.url
   };
-  console.log(request);
+  console.log("request",request);
+  console.log(req);
   res.json({request: request});
 });
 
