@@ -22,7 +22,7 @@
 var meiligao = require('meiligao');
 
 var server = new meiligao.Server({
-    timeout: 120000
+    timeout: 6000
 }).listen(4000, function(error) {
     if (error) throw error;
     console.log('gps server is listening');
