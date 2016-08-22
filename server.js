@@ -62,6 +62,14 @@ server.on('connect', function(tracker) {
   // Handle errors
   tracker.on('error', function(error, buffer) {
     console.log('error parsing message:', error, buffer);
+    function hex2a(hexx) {
+      var hex = hexx.toString();//force conversion
+      var str = '';
+      for (var i = 0; i < hex.length; i += 2)
+          str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+      return str;
+    }
+    console.log('Decoded buffer',hex2a(buffer.toString('hex')));
   });
 
   // Handle disconnects
