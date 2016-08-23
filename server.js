@@ -17,8 +17,8 @@
 //
 // app.listen(port);
 // console.log("busTracker on " + port);
-
-module.exports = app;
+// 
+// module.exports = app;
 var meiligao = require('meiligao');
 
 // Set up server
