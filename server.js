@@ -20,6 +20,7 @@
 //
 // module.exports = app;
 var meiligao = require('meiligao');
+var http = require('http');
 
 // Set up server
 var server = new meiligao.Server({timeout: 60000}).listen(5009, function(error) {
@@ -49,6 +50,37 @@ server.on('connect', function(tracker) {
   // Most useful thing: alarms & reports
   tracker.on('message', function(message, tracker) {
     console.log('tracker sent message: [' + meiligao.Message.getMessageTypeByCode(message.type) + ']', message);
+    var request = http.request(options, function(res) {
+      var response = '';
+      res.on('data', function (chunk) {
+        response += chunk;
+      });
+
+      res.on('end', function () {
+        Answer.findOneAndRemove({_id: req.params.answer_id})
+        .exec(function (err, result) {
+          if (err) {
+            defer.reject(err);
+          }
+          else {
+            if (result) {
+              Comment.remove({answer_id: req.params.answer_id})
+              .exec(function (err, commentResult) {
+                if (err) {
+                  defer.reject(err);
+                }
+                else {
+                  defer.resolve({success: true, message: 'Answer successfully deleted!'});
+                }
+              });
+            }
+            else {
+              defer.resolve({success: false, message: 'Answer not found'});
+            }
+          }
+        });
+      });
+    });
   });
 
   // Useful for debugging
